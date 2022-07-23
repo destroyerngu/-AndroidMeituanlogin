@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="phoneText"
+            type="com.example.meituanlogin.login.PhoneEditText" />
+        <variable
+            name="clickEvents"
+            type="com.example.meituanlogin.adapters.ClickEvents" />
+        <variable
+            name="model"
+            type="com.example.meituanlogin.main.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LoginActivity">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:onClick="@{(view)->clickEvents.dismissView(view)}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/clear" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="56dp"
+            android:text="欢迎登陆美团"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="+86"
+            android:textColor="#252424"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/textView3"
+            app:srcCompat="@drawable/arrow"
+            app:tint="#959491" />
+
+        <com.example.meituanlogin.login.PhoneEditText
+            android:id="@+id/phoneEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:background="@drawable/no_border_shape"
+            android:hint="请输入手机号"
+            android:inputType="phone"
+            android:maxLength="13"
+            android:letterSpacing="0.1"
+            android:textCursorDrawable="@drawable/cursor_color_shape"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintEnd_toStartOf="@+id/clear_text_button"
+            app:layout_constraintStart_toEndOf="@+id/imageView3"
+            app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+        <ImageView
+            android:id="@+id/clear_text_button"
+            setVisibility="@{phoneText.phoneNumber}"
+            android:onClick="@{(view)->clickEvents.clearPhoneNumber(view,phoneText)}"
+            android:layout_width="12dp"
+            android:layout_height="13dp"
+            android:layout_marginEnd="40dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView3"
+            app:layout_constraintVertical_bias="0.555"
+            app:srcCompat="@drawable/clear"
+            app:tint="#959491" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#ccc"
+            app:layout_constraintEnd_toEndOf="@+id/clear_text_button"
+            app:layout_constraintStart_toStartOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/phoneEditText" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#ccc"
+            shouldShow="@{model.isPhoneNumberVerify()}"
+            app:layout_constraintEnd_toEndOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="@+id/passwordEditText"
+            app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+
+        <EditText
+            android:id="@+id/passwordEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/no_border_shape"
+            android:hint="请输入密码"
+            android:letterSpacing="0.1"
+            android:textCursorDrawable="@drawable/cursor_color_shape"
+            shouldShowPassword="@{model.isPassword()}"
+            shouldShow="@{model.isPhoneNumberVerify()}"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="328dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="50dp"
+            android:gravity="top"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingTop="0dp"
+            android:onClick="@{(view)->clickEvents.changeCheckStatus(view,model)}"
+            app:layout_constraintEnd_toEndOf="@+id/xieyi"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <TextView
+            android:id="@+id/xieyi"
+            shouldShowAnimation="@{model.showAnimation}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="@string/xieyi"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/clear_text_button"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/checkBox" />
+
+        <Button
+            android:id="@+id/button"
+            setEnabled="@{phoneText.phoneNumber}"
+            android:onClick="@{(view)->clickEvents.sendVerifyCode(view,model,phoneText)}"
+            showTitle="@{model.isPhoneNumberVerify()}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/btn_selector"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/xieyi"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/checkBox"
+            app:layout_constraintTop_toBottomOf="@+id/xieyi" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:onClick="@{(view)->clickEvents.changeEye(view,model)}"
+            shouldShow="@{model.isPhoneNumberVerify()}"
+            app:layout_constraintBottom_toBottomOf="@+id/passwordEditText"
+            app:layout_constraintEnd_toEndOf="@+id/clear_text_button"
+            app:layout_constraintTop_toTopOf="@+id/passwordEditText"
+            app:srcCompat="@drawable/close_eye"
+            app:tint="#959491" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="密码登录"
+            android:onClick="@{(view)->clickEvents.changeVerifyMethod(view,model)}"
+            android:textSize="12sp"
+            android:textColor="#232323"
+            app:layout_constraintStart_toStartOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
